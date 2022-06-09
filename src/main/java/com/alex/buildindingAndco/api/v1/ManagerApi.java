@@ -119,6 +119,4 @@ public class ManagerApi {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());
         }
     }
-
-
 }

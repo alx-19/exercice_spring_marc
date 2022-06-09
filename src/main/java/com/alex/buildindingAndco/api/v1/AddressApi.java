@@ -119,6 +119,4 @@ public class AddressApi {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());
         }
     }
-
-
 }

@@ -35,7 +35,7 @@ public class TechnicianApi {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(
-            summary = "Return the list of all technicianes by city ascending.")
+            summary = "Return the list of all technicians by city ascending.")
     public ResponseEntity<List<TechnicianDto>> getAll() {
         log.info("Retrieving Technicianes...");
 

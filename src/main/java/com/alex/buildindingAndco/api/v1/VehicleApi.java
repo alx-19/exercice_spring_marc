@@ -35,7 +35,7 @@ public class VehicleApi {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(
-            summary = "Return the list of all vehiclees by city ascending.")
+            summary = "Return the list of all vehicles by city ascending.")
     public ResponseEntity<List<VehicleDto>> getAll() {
         log.info("Retrieving vehiclees...");
 
