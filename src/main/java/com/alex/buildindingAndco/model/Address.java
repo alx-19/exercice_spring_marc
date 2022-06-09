@@ -1,14 +1,13 @@
 package com.alex.buildindingAndco.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
 
-@Data // getter setter + toString + constructeur sans parametre
+@Setter
+@Getter// getter setter + toString + constructeur sans parametre
 @AllArgsConstructor // constructeur avec parametres
 @NoArgsConstructor // constructeur sans parametre
 @Entity

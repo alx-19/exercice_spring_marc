@@ -1,64 +1,103 @@
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE customers
+create table public.addresses
 (
-    id        SERIAL PRIMARY KEY NOT NULL,
-    lastname  VARCHAR(100),
-    firstname VARCHAR(100),
-    company   VARCHAR(200),
-    mail      VARCHAR(255),
-    phone     VARCHAR(15),
-    mobile    VARCHAR(15),
-    notes     TEXT,
-    active    BOOLEAN
+    id serial
+        primary key,
+    city varchar(255) not null,
+    number bigint not null,
+    street varchar(255) not null,
+    worksite_id integer
 );
 
-CREATE TABLE orders
+alter table public.addresses owner to "user";
+
+create table public.managers
 (
-    id             SERIAL PRIMARY KEY NOT NULL,
-    customer_id    INT,
-    label          VARCHAR(100),
-    adr_et         DECIMAL,
-    number_of_days DECIMAL,
-    tva            DECIMAL,
-    status         VARCHAR(30),
-    type           VARCHAR(100),
-    notes          TEXT,
-    FOREIGN KEY (customer_id) REFERENCES customers (id)
+    id serial
+        primary key,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    mobile bigint not null,
+    phone bigint
 );
 
-CREATE TABLE users
+alter table public.managers owner to "user";
+
+create table public.technicians
 (
-    id       SERIAL PRIMARY KEY NOT NULL,
-    username VARCHAR(30),
-    password VARCHAR(255),
-    mail     VARCHAR(255),
-    grants   VARCHAR(255)
+    id serial
+        primary key,
+    age bigint,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    address_id integer not null
+        constraint fknj7cjtejw0acb0qvlqafgyqgn
+            references public.addresses,
+    manager_id integer not null
+        constraint fkpuaftfc61523jghsjytt6y6a4
+            references public.managers,
+    vehicle_id integer
 );
 
-INSERT INTO customers (lastname, firstname, company, mail, mobile, notes, active)
-VALUES ('JONES', 'Indiana', 'Université de Chicago', 'indiana.jonas@univ-chicago.com', '0666666666',
-        'Les notes d''Indiana', true);
+alter table public.technicians owner to "user";
 
-INSERT INTO customers (lastname, firstname, company, mail, mobile, notes, active)
-VALUES ('KENOBI', 'Obi-Wan', 'Jedis', 'obiwan.kenobi@jedis.com', '0666666666', 'Les notes d''Obi Wan', true);
+create table public.vehicles
+(
+    id serial
+        primary key,
+    number_plate varchar(7) not null
+        constraint uk_q3j60y2qghw51mfwq64i43fut
+            unique,
+    model varchar(255) not null,
+    year_of_construction bigint not null,
+    technician_id integer
+        constraint fkqrnbrkq585eq4faylh5qo183i
+            references public.technicians
+);
 
-INSERT INTO customers (lastname, firstname, company, mail, mobile, notes, active)
-VALUES ('MCCLANE', 'John', 'NYPD', 'john.mcclane@nypd.com', '0666666666', 'Les notes de John', false);
+alter table public.vehicles owner to "user";
 
-INSERT INTO customers (lastname, firstname, company, mail, mobile, notes, active)
-VALUES ('MCFLY', 'Marty', 'DOC', 'marty.mcfly@doc.com', NULL, 'Les notes de Marty', false);
+alter table public.technicians
+    add constraint fki7al8pqnkdx7gwk78h01aey5
+        foreign key (vehicle_id) references public.vehicles;
 
-INSERT INTO orders (customer_id, label, adr_et, number_of_days, tva, status, type, notes)
-VALUES (1, 'Formation Java', 450.0, 5, 20, 'En cours', 'Forfait', 'Test');
+create table public.worksites
+(
+    id serial
+        primary key,
+    name varchar(255) not null,
+    price numeric not null,
+    address_id integer
+        constraint fkk54a4eh4kns9qbfnlob7j5wte
+            references public.addresses
+);
 
-INSERT INTO orders (customer_id, label, adr_et, number_of_days, tva, status, type, notes)
-VALUES (1, 'Formation Spring', 450.0, 3, 20.0, 'En attente', 'Forfait', 'Test');
+alter table public.worksites owner to "user";
 
-INSERT INTO orders (customer_id, label, adr_et, number_of_days, tva, status, type, notes)
-VALUES (2, 'Formation Jedi', 1500.0, 2, 20.0, 'Payée', 'Forfait', 'Notes sur la formation');
+alter table public.addresses
+    add constraint fk9u9y49v2taaily1sqfu9f6oxg
+        foreign key (worksite_id) references public.worksites;
 
-INSERT INTO users (username, password, mail, grants)
-VALUES ('admin', '$2y$10$vko34oH32uca.EW2mBgaUO/q53s/cePx0Z/MNbTze7Xdnwkn/1zRi', 'admin@test.fr', 'ADMIN');
+create table public.technician_worksite
+(
+    technician_id integer not null
+        constraint fksibvkta5syh59vj971y2mutii
+            references public.technicians,
+    worksite_id integer not null
+        constraint fkmy010m35kwyx41lr9ecbyqbjb
+            references public.worksites
+);
+
+alter table public.technician_worksite owner to "user";
+
+create table public.users
+(
+    id serial
+        primary key,
+    grants varchar(255),
+    mail varchar(255),
+    password varchar(255),
+    username varchar(30)
+);
+
+alter table public.users owner to "user";
+

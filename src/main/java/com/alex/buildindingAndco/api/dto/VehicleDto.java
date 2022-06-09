@@ -1,11 +1,10 @@
 package com.alex.buildindingAndco.api.dto;
 
 import com.alex.buildindingAndco.model.Technician;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleDto {
@@ -14,5 +13,5 @@ public class VehicleDto {
     private String NumberPlate;
     private String model;
     private Long yearOfConstruction;
-    private Technician technician;
+    private Integer technicianId;
 }

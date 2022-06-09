@@ -38,7 +38,6 @@ public class WorksiteApi {
             summary = "Return the list of all worksites by city ascending.")
     public ResponseEntity<List<WorksiteDto>> getAll() {
         log.info("Retrieving worksites...");
-
         return ResponseEntity.ok(
                 this.worksiteService.getAll().stream()
                         .map(this.worksiteMapper::mapToDto)

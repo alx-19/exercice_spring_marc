@@ -3,14 +3,13 @@ package com.alex.buildindingAndco.api.dto;
 import com.alex.buildindingAndco.model.Address;
 import com.alex.buildindingAndco.model.Manager;
 import com.alex.buildindingAndco.model.Vehicle;
-import com.alex.buildindingAndco.model.Worksite;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TechnicianDto {
@@ -19,8 +18,8 @@ public class TechnicianDto {
     private String firstName;
     private String lastName;
     private Long age;
-    private Manager manager;
-    private Vehicle vehicle;
-    private Address address;
+    private ManagerDto manager;
+    private VehicleDto vehicle;
+    private AddressDto address;
     Set<Integer> worksitesId;
 }

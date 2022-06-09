@@ -38,7 +38,6 @@ public class AddressApi {
             summary = "Return the list of all addresses by city ascending.")
     public ResponseEntity<List<AddressDto>> getAll() {
         log.info("Retrieving addresses...");
-
         return ResponseEntity.ok(
                 this.addressService.getAll().stream()
                         .map(this.addressMapper::mapToDto)

@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE, uses = {ManagerMapper.class, VehicleMapper.class, AddressMapper.class})
 public interface TechnicianMapper {
 
     @Mapping(target = "worksitesId", expression = "java(getWorksitesToDto(technician.getWorksites()))")

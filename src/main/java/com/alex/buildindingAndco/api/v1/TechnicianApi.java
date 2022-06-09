@@ -38,11 +38,11 @@ public class TechnicianApi {
             summary = "Return the list of all technicians by city ascending.")
     public ResponseEntity<List<TechnicianDto>> getAll() {
         log.info("Retrieving Technicianes...");
-
+        List<TechnicianDto> res =     this.technicianService.getAll().stream()
+                .map(this.technicianMapper::mapToDto)
+                .toList();
         return ResponseEntity.ok(
-                this.technicianService.getAll().stream()
-                        .map(this.technicianMapper::mapToDto)
-                        .toList()
+                res
         );
     }
 

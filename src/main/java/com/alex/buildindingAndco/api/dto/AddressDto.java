@@ -1,13 +1,11 @@
 package com.alex.buildindingAndco.api.dto;
 
-import com.alex.buildindingAndco.model.Worksite;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressDto {
